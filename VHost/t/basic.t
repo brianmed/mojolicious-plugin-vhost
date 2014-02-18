@@ -4,7 +4,7 @@ use Test::More;
 use Mojolicious::Lite;
 use Test::Mojo;
 
-plugin 'VHost';
+plugin 'VHost' => { config => {} };
 
 get '/' => sub {
   my $self = shift;
