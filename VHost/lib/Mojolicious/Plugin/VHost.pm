@@ -1,15 +1,15 @@
 package Mojolicious::Plugin::VHost;
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 has qw(config);
 has defaults => sub { {} };
 
 sub register {
-    my ($vhost, $app, $conf) = @_;
+    my ($vhost, $app) = @_;
 
-    $vhost->config($conf->{config});
+    $vhost->config($app->config("VHost"));
 
     $vhost->defaults({
         routes => $app->routes->namespaces,
@@ -46,8 +46,8 @@ Mojolicious::Plugin::VHost - Mojolicious Plugin that adds VirtualHosts
 =head1 SYNOPSIS
 
   # Mojolicious
-  my $config = $self->plugin('JSONConfig', { file => "vhost.conf" });
-  $self->plugin('VHost', { config => $config });
+  $self->plugin('JSONConfig');
+  $self->plugin('VHost');
 
 =head1 DESCRIPTION
 
