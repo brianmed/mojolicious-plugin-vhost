@@ -4,13 +4,13 @@ use Mojo::Base 'Mojolicious::Plugin';
 our $VERSION = '0.02';
 
 sub register {
-    my ($vhost, $app) = @_;
+    my ($plugin, $app) = @_;
 
-    my $defaults = {
+    my %defaults = (
         routes => $app->routes->namespaces,
         static => $app->static->paths,
         templates => $app->renderer->paths,
-    });
+    );
 
     $app->hook(
         before_dispatch => sub {
@@ -18,13 +18,14 @@ sub register {
 
             my $host = $c->tx->req->headers->host;
 
-            my $conf = $c->app->config('VHost')->{$host} || $defaults;
+            my $hosts = $c->app->config('VHost') || {};
+            my %conf = ( %defaults, %{$hosts->{$host} || {}} );
 
             return unless $conf;
 
-            $c->app->routes->namespaces($conf->{routes});
-            $c->app->static->paths($conf->{static});
-            $c->app->renderer->paths($conf->{templates});
+            $c->app->routes->namespaces($conf{routes});
+            $c->app->static->paths($conf{static});
+            $c->app->renderer->paths($conf{templates});
         }
     );
 }
