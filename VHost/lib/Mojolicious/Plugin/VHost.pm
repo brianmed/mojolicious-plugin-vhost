@@ -1,10 +1,9 @@
 package Mojolicious::Plugin::VHost;
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 has qw(config);
-has defaults => sub { {} };
 
 sub register {
     my ($vhost, $app) = @_;
@@ -13,7 +12,7 @@ sub register {
         routes => $app->routes->namespaces,
         static => $app->static->paths,
         templates => $app->renderer->paths,
-    });
+    };
 
     $app->hook(
         before_dispatch => sub {
@@ -25,9 +24,10 @@ sub register {
 
             return unless $conf;
 
-            $c->app->routes->namespaces($conf->{routes});
-            $c->app->static->paths($conf->{static});
-            $c->app->renderer->paths($conf->{templates});
+            my $app = $c->app;
+            $app->routes->namespaces($conf->{routes});
+            $app->static->paths($conf->{static});
+            $app->renderer->paths($conf->{templates});
         }
     );
 }
