@@ -58,8 +58,11 @@ L<Mojolicious::Plugin::VHost> adds virtualhosts to L<Mojolicious>.
 One supported method of configuration is with the JSONConfig plugin.  Add vhosts with a config such as:
 
     {
-        "host1":{"routes":["VHost::First::Controller"],"static":["public\/first"],"templates":["templates\/first"]},
-        "host2":{"routes":["VHost::Another::Controller"],"static":["public\/another"],"templates":["templates\/another"]}
+        "VHost":
+            {
+                "host1":{"routes":["VHost::First::Controller"],"static":["public\/first"],"templates":["templates\/first"]},
+                "host2":{"routes":["VHost::Another::Controller"],"static":["public\/another"],"templates":["templates\/another"]}
+            }
     }
 
 host1 and host2 are the Host: header field and must match exactly.  The following route format has been tested:
@@ -75,8 +78,8 @@ A full startup sub is:
     sub startup {
       my $self = shift;
 
-      my $config = $self->plugin('JSONConfig', { file => "vhost.conf" });
-      $self->plugin('VHost', { config => $config });
+      $self->plugin('JSONConfig');
+      $self->plugin('VHost');
 
       # Router
       my $r = $self->routes;
