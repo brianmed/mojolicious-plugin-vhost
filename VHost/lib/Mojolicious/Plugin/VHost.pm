@@ -41,7 +41,7 @@ __END__
 
 =head1 NAME
 
-Mojolicious::Plugin::VHost - Mojolicious Plugin
+Mojolicious::Plugin::VHost - Mojolicious Plugin that adds VirtualHosts
 
 =head1 SYNOPSIS
 
@@ -51,7 +51,7 @@ Mojolicious::Plugin::VHost - Mojolicious Plugin
 
 =head1 DESCRIPTION
 
-L<Mojolicious::Plugin::VHost> is a L<Mojolicious> plugin.
+L<Mojolicious::Plugin::VHost> adds virtualhosts to L<Mojolicious>.
 
 =head1 CONFIGURATION
 
