@@ -1,7 +1,7 @@
 package Mojolicious::Plugin::VHost;
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub register {
     my ($plugin, $app) = @_;
