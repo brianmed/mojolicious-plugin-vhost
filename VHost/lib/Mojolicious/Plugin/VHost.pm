@@ -3,9 +3,6 @@ use Mojo::Base 'Mojolicious::Plugin';
 
 our $VERSION = '0.02';
 
-has qw(config);
-has defaults => sub { {} };
-
 sub register {
     my ($vhost, $app) = @_;
 
