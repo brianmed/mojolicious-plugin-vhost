@@ -9,9 +9,7 @@ has defaults => sub { {} };
 sub register {
     my ($vhost, $app) = @_;
 
-    $vhost->config($app->config("VHost"));
-
-    $vhost->defaults({
+    my $defaults = {
         routes => $app->routes->namespaces,
         static => $app->static->paths,
         templates => $app->renderer->paths,
@@ -23,7 +21,7 @@ sub register {
 
             my $host = $c->tx->req->headers->host;
 
-            my $conf = $vhost->config->{$host} || $vhost->defaults;
+            my $conf = $c->app->config('VHost')->{$host} || $defaults;
 
             return unless $conf;
 
